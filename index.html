@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather site</title>
+</head>
+<style>
+  body {
+    background-image: url("pexels-pixabay-209831.jpg");
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+  }
+  .body {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+  }
+  .form {
+    width: 500px;
+    background-color: rgba(240, 248, 255, 0.519);
+    padding: 100px;
+  }
+  .form input {
+    width: 100%;
+    border: 1px solid grey;
+    background: none;
+    height: 50px;
+  }
+  .form button {
+    padding: 10px;
+    margin-top: 20px;
+  }
+  #tempResult h4 {
+    margin-top: 90%;
+    font-size: 60px;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  #tempResult h6{
+    font-size: 40px;
+    margin: 10px 0;
+  }
+  #tempResult p {
+    font-size: 30px;
+    margin: 10px 0;
+  }
+
+
+</style>
+<body>
+  <div class="body" id="result"> 
+    <div id="tempResult">
+      <h1>WEATHER</h1>
+      <h4 id="temp"></h4>
+      <h6 id="feelsLike"></h6>
+      <p id="place"></p>
+    </div>
+    <div class="form">
+      <input type="text" id="input">
+      <button onclick="getWeatherData()">search</button>
+      <div id="weatherData">
+        <h4>Weather details</h4>
+        <p>country:</p>
+        <label for="" id="country"></label>
+        <p>Humidity:</p>
+        <label for="" id="humidity"></label>
+        <p>wind:</p>
+        <label for="" id="wind"></label>
+        <p>pressure:</p>
+        <label for="" id="pressure"></label>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+
+async function getWeatherData() {
+    const cityName = document.getElementById('input').value;
+    // Replace 'YourAPIKey' with your actual API key
+    const api_url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=8ac5c4d57ba6a4b3dfcf622700447b1e&units=metric`;
+    const response = await fetch(api_url);
+    const data = await response.json();
+    document.getElementById('temp').innerHTML = data.main.temp;
+    document.getElementById('feelsLike').innerHTML = `feels like ${data.main.feels_like}`;
+    document.getElementById('place').innerHTML = data.name;
+
+    document.getElementById('country').innerHTML = data.sys.country;
+    document.getElementById('humidity').innerHTML = data.main.humidity;
+    document.getElementById('wind').innerHTML = data.wind.speed;
+    document.getElementById('pressure').innerHTML = data.main.pressure;
+}
+
+</script>
+</html>
